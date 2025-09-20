@@ -24,7 +24,7 @@
 <body>
 <header>
   <h1>BrainWave — Demo (local)</h1>
-  <div class="muted">Prototype: stores data in your browser only.</div>
+  
 </header>
 
 <section class="card" id="profileSection">
@@ -126,7 +126,7 @@
 
   // --- static lists (you can change these) ---
   const SUBJECTS = ["CS 180", "CS 240", "CS 251", "MATH 165", "MATH 166", "PHYS 172", "CHEM 115", "STAT 350"];
-  const SPACES = ["Library", "Coffee shop", "Home", "Online / Zoom", "Classroom", "Dorm Lounges"];
+  const SPACES = ["Library", "Coffee shop", "Online / Zoom", "Classroom", "Dorm Lounges"];
   const TRAITS = ["Introvert", "Extrovert", "Planner", "Spontaneous", "Motivated", "Procrastinator"];
 
   // --- helpers to build checkboxes ---
@@ -411,12 +411,12 @@
     const users = loadUsers();
     if (users.length === 0) {
       const demoA = {
-        id: 1111, name: 'Alice', email: 'alice@purdue.edu', year:'Junior', major:'CS', subjects:['CS 180/182','CS 240'],
+        id: 1111, name: 'Alice', email: 'alice@purdue.edu', year:'Junior', major:'CS', subjects:['CS 180','CS 240'],
         desired_group_size:'2', comfort_level:'Quiet', study_space_prefs:['Library'], max_distance:5,
         available_times:['Mon 6-8pm','Wed 6-8pm'], personality_traits:['Planner'], goal:'Understand algorithms', ice_breaker:'Tea or coffee?', bio:'I like quiet study.'
       };
       const demoB = {
-        id: 2222, name: 'Bob', email: 'bob@purdue.edu', year:'Junior', major:'CS', subjects:['CS 180/182','MATH 165'],
+        id: 2222, name: 'Bob', email: 'bob@purdue.edu', year:'Junior', major:'CS', subjects:['CS 180','MATH 165'],
         desired_group_size:'3', comfort_level:'Mixed', study_space_prefs:['Coffee shop','Online / Zoom'], max_distance:10,
         available_times:['Mon 6-8pm','Tue 2-4pm'], personality_traits:['Extrovert','Motivated'], goal:'Pass midterms', ice_breaker:'Favorite snack?', bio:'Love group work.'
       };
