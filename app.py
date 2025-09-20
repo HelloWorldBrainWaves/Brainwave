@@ -1,6 +1,6 @@
 import json
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from langroid.agent.chat_agent import ChatAgent
 from langroid.agent.task import Task
 from langroid.language_models import OpenAIGPTConfig, OpenAIChatModel
@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Set up the Flask application
+# Flask will look for HTML files in a folder named 'templates'
 app = Flask(__name__)
 
 # Configure the LLM to use a local Ollama model.
@@ -42,17 +43,37 @@ task = Task(
 def ask_assistant():
     """
     Handles a POST request to ask the Langroid chat assistant a question.
-    It takes a JSON payload with a 'question' key.
+    It now takes all form data and builds a single, detailed prompt.
     """
     data = request.json
-    question = data.get('question')
+    
+    # Construct the comprehensive prompt for the AI from the form data
+    prompt = f"""Act as a Purdue University study planner. Based on the following student information, recommend a specific and ideal study location on campus.
 
-    if not question:
-        return jsonify({"error": "No question provided"}), 400
+Student Profile:
+- Name: {data.get('name', 'Not specified')}
+- Year: {data.get('year', 'Not specified')}
+- Major: {data.get('major', 'Not specified')}
+- Classes: {data.get('classes', 'Not specified')}
+- Desired Group Size: {data.get('groupSize', 'Not specified')}
+- Comfort Level: {data.get('comfortLevel', 'Not specified')}
+- Space Preferences: {', '.join(data.get('spacePrefs', []) ) or 'None'}
+- Travel Distance: {data.get('travelDistance', 'Not specified')}
+- Study Times: {data.get('times', 'Not specified')}
+- Personality: {data.get('personality', 'Not specified')}
+- Goal: {data.get('goal', 'Not specified')}
+- Bio: {data.get('bio', 'Not specified')}
 
+Current Context:
+- Current Location (Latitude, Longitude): ({data.get('latitude', 'Not specified')}, {data.get('longitude', 'Not specified')})
+- Current Time: {data.get('currentTime', 'Not specified')}
+
+The recommendation should be a specific building or location, with a brief explanation of why it fits the criteria. Be friendly and helpful.
+"""
+    
     try:
-        # Pass the user's question to the Langroid agent and get a response
-        response = task.run(question)
+        # Pass the detailed prompt to the Langroid agent and get a response
+        response = task.run(prompt)
         return jsonify({"response": response})
     except Exception as e:
         # Handle potential errors during agent processing
@@ -61,75 +82,12 @@ def ask_assistant():
 @app.route('/')
 def home():
     """
-    Renders a simple HTML page to interact with the assistant.
-    This is for demonstration purposes.
+    Renders the HTML page to interact with the assistant.
     """
-    return """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Local AI Assistant</title>
-        <style>
-            body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; }
-            #chat-container { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
-            #user-input { width: 100%; padding: 8px; }
-            .message { margin-bottom: 10px; }
-            .user { text-align: right; color: blue; }
-            .assistant { text-align: left; color: green; }
-        </style>
-    </head>
-    <body>
-        <h1>Local AI Assistant</h1>
-        <div id="chat-container"></div>
-        <input type="text" id="user-input" placeholder="Type your question...">
-        <button onclick="sendMessage()">Send</button>
-
-        <script>
-            async function sendMessage() {
-                const input = document.getElementById('user-input');
-                const chatContainer = document.getElementById('chat-container');
-                const question = input.value;
-
-                if (!question.trim()) return;
-
-                // Display user message
-                chatContainer.innerHTML += `<div class="message user">You: ${question}</div>`;
-                input.value = '';
-
-                // Send message to the backend
-                try {
-                    const response = await fetch('/ask', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ question: question })
-                    });
-                    const data = await response.json();
-                    
-                    // Display assistant's response
-                    const assistantResponse = data.response;
-                    chatContainer.innerHTML += `<div class="message assistant">Assistant: ${assistantResponse}</div>`;
-                } catch (error) {
-                    chatContainer.innerHTML += `<div class="message assistant" style="color: red;">Error: ${error.message}</div>`;
-                }
-                
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-            document.getElementById('user-input').addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    sendMessage();
-                }
-            });
-        </script>
-    </body>
-    </html>
-    """
+    return render_template('index.html')
 
 # This block ensures the Flask app runs only when the script is executed directly
 if __name__ == '__main__':
     # Use a port from environment variable, or default to 5000
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
-
