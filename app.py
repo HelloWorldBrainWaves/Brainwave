@@ -1,7 +1,11 @@
 from flask import Flask, request, jsonify, render_template
 import json
-from langroid.chat import Chat
-from langroid import tools
+
+# Langroid 0.59.8 imports
+from langroid.agents.chat import Chat        # Chat agent
+from langroid import tools                   # Generic tools
+from langroid.tools.web_search import WebSearch  # WebSearch tool
+
 
 app = Flask(__name__)
 
@@ -19,8 +23,7 @@ def format_spots(spots):
 
 knowledge_base = format_spots(study_spots)
 
-# Initialize Ollama + web access
-web_search = tools.WebSearch()
+web_search = WebSearch()
 chat = Chat(tools=[web_search])
 
 # Serve frontend
