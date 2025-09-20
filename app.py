@@ -1,19 +1,14 @@
 from flask import Flask, request, jsonify, render_template
 import json
-
-# Langroid 0.59.8 imports
-from langroid.agents.chat import Chat        # Chat agent
-from langroid import tools                   # Generic tools
-from langroid.tools.web_search import WebSearch  # WebSearch tool
-
+from langroid.agents.chat import Chat
+from langroid import tools
+from langroid.tools.web_search import WebSearch
 
 app = Flask(__name__)
 
-# Load study spots dynamically
 with open("study_spots.json", "r") as f:
     study_spots = json.load(f)
 
-# Format study spots for prompt
 def format_spots(spots):
     lines = []
     for spot in spots:
@@ -26,26 +21,20 @@ knowledge_base = format_spots(study_spots)
 web_search = WebSearch()
 chat = Chat(tools=[web_search])
 
-# Serve frontend
 @app.route("/")
 def home():
     return render_template("index.html")
 
-# Store users temporarily (in real app, use a database)
 user_profiles = {}
 
-# API endpoint
 @app.route("/api/recommend", methods=["POST"])
 def recommend():
     data = request.json
-    email = data.get("email")  # identify returning users
+    email = data.get("email")
     profile = user_profiles.get(email, {})
-
-    # Merge previous profile with new data
     profile.update(data)
     user_profiles[email] = profile
 
-    # Build prompt for AI
     prompt = f"""
 You are a Purdue study space recommender.
 
@@ -61,8 +50,7 @@ Return a JSON object with two fields:
 Example:
 {{ "spot": "Hicks Undergraduate Library", "reason": "Quiet, open late, individual desks" }}
 """
-
-    response = chat.send_message(prompt)
+    response = chat.chat(prompt)
     return jsonify({"reply": response})
 
 if __name__ == "__main__":
