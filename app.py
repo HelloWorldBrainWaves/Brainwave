@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import json
-from langroid import Chat, tools
+from langroid.chat import Chat
+from langroid import tools
 
 app = Flask(__name__)
 
