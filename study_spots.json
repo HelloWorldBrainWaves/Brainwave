@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Wilmeth Active Learning Center (WALC)",
+    "tags": ["group", "quiet", "24h", "outlets", "central campus"]
+  },
+  {
+    "name": "Hicks Undergraduate Library",
+    "tags": ["quiet", "individual", "late night", "outlets"]
+  },
+  {
+    "name": "Union Commons",
+    "tags": ["group", "casual", "coffee", "comfortable seating"]
+  },
+  {
+    "name": "Engineering Library",
+    "tags": ["quiet", "group", "technical resources", "outlets"]
+  },
+  {
+    "name": "Hansen Agricultural Library",
+    "tags": ["quiet", "research", "computer stations", "outlets"]
+  },
+  {
+    "name": "PMU Study Lounges",
+    "tags": ["group", "casual", "coffee", "central campus"]
+  },
+  {
+    "name": "Young Hall Study Rooms",
+    "tags": ["group", "bookable rooms", "whiteboards", "central campus"]
+  }
+]
