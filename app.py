@@ -1,10 +1,8 @@
 from flask import Flask, request, jsonify, render_template
 import json
-from langroid.agents.chat import Chat
+from langroid.agents.chat_agent import ChatAgent
 from langroid import tools
 from langroid.tools.web_search import WebSearch
-
-
 
 app = Flask(__name__)
 
@@ -21,7 +19,7 @@ def format_spots(spots):
 knowledge_base = format_spots(study_spots)
 
 web_search = WebSearch()
-chat = Chat(tools=[web_search])
+chat = ChatAgent(tools=[web_search])
 
 @app.route("/")
 def home():
