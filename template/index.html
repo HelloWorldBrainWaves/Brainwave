@@ -1,1 +1,133 @@
-https://github.com/oyinkansolar123-code/BrainWave.git
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Purdue Study Planner</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: auto; }
+    h2 { margin-top: 40px; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea { width: 100%; padding: 5px; margin-top: 5px; }
+    button { margin-top: 20px; padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+
+<h1>Purdue Study Planner</h1>
+
+<!-- Step 1: Initial Profile -->
+<div id="profile-form">
+  <h2>Create Your Profile</h2>
+  <form id="initialForm">
+    <label>Purdue Email</label>
+    <input type="email" name="email" required>
+
+    <label>Phone Number</label>
+    <input type="text" name="phone" required>
+
+    <label>Full Name</label>
+    <input type="text" name="name" required>
+
+    <label>Year</label>
+    <select name="year" required>
+      <option value="Freshman">Freshman</option>
+      <option value="Sophomore">Sophomore</option>
+      <option value="Junior">Junior</option>
+      <option value="Senior">Senior</option>
+      <option value="Graduate">Graduate</option>
+    </select>
+
+    <label>Major</label>
+    <input type="text" name="major" required>
+
+    <label>Subjects / Classes You Are Taking</label>
+    <textarea name="classes" placeholder="List your classes, separated by commas" required></textarea>
+
+    <label>Desired Study Group Size</label>
+    <input type="number" name="group_size" min="1" max="10">
+
+    <label>Comfort Level (1-10)</label>
+    <input type="number" name="comfort_level" min="1" max="10">
+
+    <label>Study Space Preferences</label>
+    <textarea name="space_pref" placeholder="Quiet, group-friendly, casual, etc."></textarea>
+
+    <label>Distance Willing to Travel (minutes)</label>
+    <input type="number" name="travel_distance" min="1" max="60">
+
+    <button type="submit">Save Profile</button>
+  </form>
+</div>
+
+<!-- Step 2: Returning User / Profile Update -->
+<div id="update-form" style="display:none;">
+  <h2>Update Your Profile</h2>
+  <form id="updateForm">
+    <label>Available Times & Dates</label>
+    <textarea name="schedule" placeholder="e.g., Mon 5-7pm, Tue 3-5pm"></textarea>
+
+    <label>Personality Traits</label>
+    <input type="text" name="personality" placeholder="e.g., Introvert, focused">
+
+    <label>Goals</label>
+    <textarea name="goals"></textarea>
+
+    <label>Bio</label>
+    <textarea name="bio" placeholder="Tell us about yourself"></textarea>
+
+    <button type="submit">Update Profile</button>
+  </form>
+</div>
+
+<h3>AI Recommendation</h3>
+<pre id="recommendation"></pre>
+
+<script>
+  const initialForm = document.getElementById("initialForm");
+  const updateForm = document.getElementById("updateForm");
+  const profileDiv = document.getElementById("profile-form");
+  const updateDiv = document.getElementById("update-form");
+  const output = document.getElementById("recommendation");
+
+  // Simulate logged-in user (for demo)
+  let isReturningUser = false;
+
+  // Handle initial profile submission
+  initialForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(initialForm).entries());
+
+    // Send to backend
+    const res = await fetch("/api/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+    output.textContent = data.reply;
+
+    // Show update form for next time
+    profileDiv.style.display = "none";
+    updateDiv.style.display = "block";
+    isReturningUser = true;
+  };
+
+  // Handle returning user updates
+  updateForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(updateForm).entries());
+
+    // Send to backend (merge with previous profile in real app)
+    const res = await fetch("/api/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+    output.textContent = data.reply;
+  };
+</script>
+
+</body>
+</html>
