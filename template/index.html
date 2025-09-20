@@ -1,132 +1,267 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-  <title>Purdue Study Planner</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: auto; }
-    h2 { margin-top: 40px; }
-    label { display: block; margin-top: 10px; }
-    input, select, textarea { width: 100%; padding: 5px; margin-top: 5px; }
-    button { margin-top: 20px; padding: 10px 20px; font-size: 16px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purdue Study Planner</title>
+<script src="https://www.google.com/search?q=https://cdn.tailwindcss.com"></script>
+<style>
+body {
+font-family: 'Inter', sans-serif;
+background-color: #f3f4f6;
+color: #1f2937;
+}
+</style>
 </head>
-<body>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-<h1>Purdue Study Planner</h1>
+<div id="planner-container" class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
+    
+    <div id="step-1" class="form-step">
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Your Purdue Study Planner</h1>
+        <p class="text-center text-gray-600 mb-8">Let's find the perfect study spot for you! Please fill out this short survey.</p>
+        
+        <div class="space-y-6">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Purdue Email</label>
+                <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
+                <input type="tel" id="phone" name="phone" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="year" class="block text-sm font-medium text-gray-700">Year</label>
+                <select id="year" name="year" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Select your year</option>
+                    <option value="Freshman">Freshman</option>
+                    <option value="Sophomore">Sophomore</option>
+                    <option value="Junior">Junior</option>
+                    <option value="Senior">Senior</option>
+                    <option value="Graduate">Graduate</option>
+                </select>
+            </div>
+            <div>
+                <label for="major" class="block text-sm font-medium text-gray-700">Major</label>
+                <input type="text" id="major" name="major" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="classes" class="block text-sm font-medium text-gray-700">Subjects/Classes You're Taking</label>
+                <textarea id="classes" name="classes" rows="3" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+        </div>
+        <button onclick="nextStep(2)" class="mt-8 w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">Next</button>
+    </div>
 
-<!-- Step 1: Initial Profile -->
-<div id="profile-form">
-  <h2>Create Your Profile</h2>
-  <form id="initialForm">
-    <label>Purdue Email</label>
-    <input type="email" name="email" required>
+    <div id="step-2" class="form-step hidden">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Your Study Preferences</h2>
+        <div class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Desired Study Group Size</label>
+                <div class="mt-2 flex space-x-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="groupSize" value="Alone" class="form-radio text-blue-600">
+                        <span class="ml-2 text-gray-700">Alone</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="groupSize" value="Small (2-4)" class="form-radio text-blue-600">
+                        <span class="ml-2 text-gray-700">Small (2-4)</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="groupSize" value="Large (5+)" class="form-radio text-blue-600">
+                        <span class="ml-2 text-gray-700">Large (5+)</span>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Comfort Level</label>
+                <div class="mt-2 flex space-x-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="comfortLevel" value="Quiet" class="form-radio text-blue-600">
+                        <span class="ml-2 text-gray-700">Quiet</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="comfortLevel" value="Some Noise" class="form-radio text-blue-600">
+                        <span class="ml-2 text-gray-700">Some Noise</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="comfortLevel" value="Loud" class="form-radio text-blue-600">
+                        <span class="ml-2 text-gray-700">Loud</span>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Study Space Preferences</label>
+                <div class="mt-2 grid grid-cols-2 gap-4">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="spacePrefs" value="Coffee Shop" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Coffee Shop</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="spacePrefs" value="Library" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Library</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="spacePrefs" value="Outdoors" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Outdoors</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="spacePrefs" value="Dorm" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Dorm</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="spacePrefs" value="Cafe" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Cafe</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="spacePrefs" value="Building Lobby" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Building Lobby</span>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Distance Willing to Travel (walk)</label>
+                <select id="travelDistance" name="travelDistance" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Select distance</option>
+                    <option value="Less than 5 minutes">Less than 5 minutes</option>
+                    <option value="5-10 minutes">5-10 minutes</option>
+                    <option value="10-15 minutes">10-15 minutes</option>
+                    <option value="More than 15 minutes">More than 15 minutes</option>
+                </select>
+            </div>
+        </div>
+        <div class="flex space-x-4 mt-8">
+            <button onclick="nextStep(1)" class="w-1/2 bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors">Back</button>
+            <button onclick="nextStep(3)" class="w-1/2 bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">Next</button>
+        </div>
+    </div>
 
-    <label>Phone Number</label>
-    <input type="text" name="phone" required>
+    <div id="step-3" class="form-step hidden">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">More About You</h2>
+        <div class="space-y-6">
+            <div>
+                <label for="times" class="block text-sm font-medium text-gray-700">Ideal Study Times/Days</label>
+                <textarea id="times" name="times" rows="3" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            <div>
+                <label for="personality" class="block text-sm font-medium text-gray-700">Personality Traits (e.g., introvert, extrovert)</label>
+                <input type="text" id="personality" name="personality" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="goal" class="block text-sm font-medium text-gray-700">Study Goal</label>
+                <input type="text" id="goal" name="goal" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="bio" class="block text-sm font-medium text-gray-700">Bio</label>
+                <textarea id="bio" name="bio" rows="3" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+        </div>
+        <div class="flex space-x-4 mt-8">
+            <button onclick="nextStep(2)" class="w-1/2 bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors">Back</button>
+            <button onclick="submitForm()" id="submitButton" class="w-1/2 bg-green-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-700 transition-colors">Find My Spot!</button>
+        </div>
+    </div>
 
-    <label>Full Name</label>
-    <input type="text" name="name" required>
+    <div id="loading" class="hidden text-center">
+        <div class="flex justify-center items-center mb-4">
+            <div class="w-12 h-12 border-4 border-blue-600 border-dashed rounded-full animate-spin"></div>
+        </div>
+        <p class="text-gray-600">Finding your perfect study spot...</p>
+    </div>
 
-    <label>Year</label>
-    <select name="year" required>
-      <option value="Freshman">Freshman</option>
-      <option value="Sophomore">Sophomore</option>
-      <option value="Junior">Junior</option>
-      <option value="Senior">Senior</option>
-      <option value="Graduate">Graduate</option>
-    </select>
+    <div id="results" class="hidden">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Your Recommended Study Spot</h2>
+        <div id="response-content" class="bg-gray-100 p-6 rounded-lg"></div>
+        <button onclick="resetForm()" class="mt-8 w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">Start Over</button>
+    </div>
 
-    <label>Major</label>
-    <input type="text" name="major" required>
-
-    <label>Subjects / Classes You Are Taking</label>
-    <textarea name="classes" placeholder="List your classes, separated by commas" required></textarea>
-
-    <label>Desired Study Group Size</label>
-    <input type="number" name="group_size" min="1" max="10">
-
-    <label>Comfort Level (1-10)</label>
-    <input type="number" name="comfort_level" min="1" max="10">
-
-    <label>Study Space Preferences</label>
-    <textarea name="space_pref" placeholder="Quiet, group-friendly, casual, etc."></textarea>
-
-    <label>Distance Willing to Travel (minutes)</label>
-    <input type="number" name="travel_distance" min="1" max="60">
-
-    <button type="submit">Save Profile</button>
-  </form>
 </div>
-
-<!-- Step 2: Returning User / Profile Update -->
-<div id="update-form" style="display:none;">
-  <h2>Update Your Profile</h2>
-  <form id="updateForm">
-    <label>Available Times & Dates</label>
-    <textarea name="schedule" placeholder="e.g., Mon 5-7pm, Tue 3-5pm"></textarea>
-
-    <label>Personality Traits</label>
-    <input type="text" name="personality" placeholder="e.g., Introvert, focused">
-
-    <label>Goals</label>
-    <textarea name="goals"></textarea>
-
-    <label>Bio</label>
-    <textarea name="bio" placeholder="Tell us about yourself"></textarea>
-
-    <button type="submit">Update Profile</button>
-  </form>
-</div>
-
-<h3>AI Recommendation</h3>
-<pre id="recommendation"></pre>
-
 <script>
-  const initialForm = document.getElementById("initialForm");
-  const updateForm = document.getElementById("updateForm");
-  const profileDiv = document.getElementById("profile-form");
-  const updateDiv = document.getElementById("update-form");
-  const output = document.getElementById("recommendation");
+    let currentStep = 1;
+    const totalSteps = 3;
 
-  // Simulate logged-in user (for demo)
-  let isReturningUser = false;
+    function nextStep(step) {
+        document.getElementById(`step-${currentStep}`).classList.add('hidden');
+        currentStep = step;
+        document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+    }
 
-  // Handle initial profile submission
-  initialForm.onsubmit = async (e) => {
-    e.preventDefault();
-    const formData = Object.fromEntries(new FormData(initialForm).entries());
+    function resetForm() {
+        document.getElementById('results').classList.add('hidden');
+        document.getElementById('planner-container').classList.remove('hidden');
+        document.getElementById('response-content').innerHTML = '';
+        document.getElementById(`step-${totalSteps}`).classList.add('hidden');
+        nextStep(1);
+    }
 
-    // Send to backend
-    const res = await fetch("/api/recommend", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    });
+    async function submitForm() {
+        document.getElementById(`step-${totalSteps}`).classList.add('hidden');
+        document.getElementById('loading').classList.remove('hidden');
+        
+        let formData = {};
+        const elements = document.querySelectorAll('#step-1 input, #step-1 select, #step-1 textarea, #step-2 input, #step-2 select, #step-3 input, #step-3 textarea');
+        elements.forEach(el => {
+            if (el.type === 'checkbox' && el.checked) {
+                if (!formData[el.name]) formData[el.name] = [];
+                formData[el.name].push(el.value);
+            } else if (el.type === 'radio' && el.checked) {
+                formData[el.name] = el.value;
+            } else {
+                formData[el.name] = el.value;
+            }
+        });
 
-    const data = await res.json();
-    output.textContent = data.reply;
+        // Get current location and time
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    formData.latitude = position.coords.latitude;
+                    formData.longitude = position.coords.longitude;
+                    sendData(formData);
+                },
+                (error) => {
+                    console.error("Geolocation error:", error);
+                    // Send data without location if permission is denied or an error occurs
+                    formData.latitude = 'Permission Denied or Not Available';
+                    formData.longitude = 'Permission Denied or Not Available';
+                    sendData(formData);
+                }
+            );
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+            // Send data without location if not supported
+            formData.latitude = 'Not Supported';
+            formData.longitude = 'Not Supported';
+            sendData(formData);
+        }
+    }
 
-    // Show update form for next time
-    profileDiv.style.display = "none";
-    updateDiv.style.display = "block";
-    isReturningUser = true;
-  };
+    async function sendData(data) {
+        data.currentTime = new Date().toLocaleString();
+        
+        const response = await fetch('/ask', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
 
-  // Handle returning user updates
-  updateForm.onsubmit = async (e) => {
-    e.preventDefault();
-    const formData = Object.fromEntries(new FormData(updateForm).entries());
-
-    // Send to backend (merge with previous profile in real app)
-    const res = await fetch("/api/recommend", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    });
-
-    const data = await res.json();
-    output.textContent = data.reply;
-  };
+        const result = await response.json();
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('results').classList.remove('hidden');
+        
+        if (response.ok) {
+            document.getElementById('response-content').innerHTML = result.response.replace(/\n/g, '<br>');
+        } else {
+            document.getElementById('response-content').innerHTML = `<p class="text-red-500">Error: ${result.error}</p>`;
+        }
+    }
 </script>
 
 </body>
