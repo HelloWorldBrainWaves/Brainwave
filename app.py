@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 import json
-from langroid.agents.chat_agent import ChatAgent
+from langroid.agent.chat_agent import ChatAgent
 from langroid import tools
 from langroid.tools.web_search import WebSearch
 
