@@ -4,6 +4,8 @@ from langroid.agents.chat import Chat
 from langroid import tools
 from langroid.tools.web_search import WebSearch
 
+
+
 app = Flask(__name__)
 
 with open("study_spots.json", "r") as f:
