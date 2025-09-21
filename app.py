@@ -1,93 +1,85 @@
-import json
 import os
 from flask import Flask, request, jsonify, render_template
-from langroid.agent.chat_agent import ChatAgent
-from langroid.agent.task import Task
-from langroid.language_models import OpenAIGPTConfig, OpenAIChatModel
-from langroid.agent.tool_message import ToolMessage
-from langroid.tools.web_search import WebSearch
+from langchain.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
+from langchain_openai import ChatOpenAI
+from langchain.chains import LLMChain
 from dotenv import load_dotenv
 
-# Load environment variables from a .env file if it exists
+# Load environment variables
 load_dotenv()
 
-# Set up the Flask application
-# Flask will look for HTML files in a folder named 'templates'
 app = Flask(__name__)
 
-# Configure the LLM to use a local Ollama model.
-# This config object is designed to be compatible with OpenAI-like APIs,
-# which Ollama provides out of the box.
-llm_config = OpenAIGPTConfig(
-    chat_model="ollama/llama3",  # Change "llama3" to the model you have pulled with Ollama
-    api_base="http://localhost:11434/v1"
+# Configure OpenAI Chat Model
+llm = ChatOpenAI(
+    model_name="gpt-4",  # or gpt-3.5-turbo
+    temperature=0.7
 )
 
-# Initialize the chat agent with a web search tool.
-# This tool allows the agent to perform Google searches to answer
-# questions that require up-to-date or specific information.
-web_search = WebSearch()
-agent = ChatAgent(
-    config=llm_config,
-    tools=[web_search]
-)
-
-# Initialize a task for the agent. The system message gives the LLM
-# its instructions and persona.
-task = Task(
-    agent=agent,
-    system_message="You are a helpful assistant. You are capable of using a web search tool to find information. If you are asked a question that requires current information or facts you don't know, you must use the web search tool."
-)
-
-@app.route('/ask', methods=['POST'])
-def ask_assistant():
-    """
-    Handles a POST request to ask the Langroid chat assistant a question.
-    It now takes all form data and builds a single, detailed prompt.
-    """
-    data = request.json
-    
-    # Construct the comprehensive prompt for the AI from the form data
-    prompt = f"""Act as a Purdue University study planner. Based on the following student information, recommend a specific and ideal study location on campus.
+# Define a chat prompt template
+prompt_template = ChatPromptTemplate.from_messages([
+    HumanMessagePromptTemplate.from_template(
+        """Act as a Purdue University study planner. Based on the following student information,
+        recommend a specific and ideal study location on campus.
 
 Student Profile:
-- Name: {data.get('name', 'Not specified')}
-- Year: {data.get('year', 'Not specified')}
-- Major: {data.get('major', 'Not specified')}
-- Classes: {data.get('classes', 'Not specified')}
-- Desired Group Size: {data.get('groupSize', 'Not specified')}
-- Comfort Level: {data.get('comfortLevel', 'Not specified')}
-- Space Preferences: {', '.join(data.get('spacePrefs', []) ) or 'None'}
-- Travel Distance: {data.get('travelDistance', 'Not specified')}
-- Study Times: {data.get('times', 'Not specified')}
-- Personality: {data.get('personality', 'Not specified')}
-- Goal: {data.get('goal', 'Not specified')}
-- Bio: {data.get('bio', 'Not specified')}
+- Name: {name}
+- Year: {year}
+- Major: {major}
+- Classes: {classes}
+- Desired Group Size: {groupSize}
+- Comfort Level: {comfortLevel}
+- Space Preferences: {spacePrefs}
+- Travel Distance: {travelDistance}
+- Study Times: {times}
+- Personality: {personality}
+- Goal: {goal}
+- Bio: {bio}
 
 Current Context:
-- Current Location (Latitude, Longitude): ({data.get('latitude', 'Not specified')}, {data.get('longitude', 'Not specified')})
-- Current Time: {data.get('currentTime', 'Not specified')}
+- Current Location (Latitude, Longitude): ({latitude}, {longitude})
+- Current Time: {currentTime}
 
-The recommendation should be a specific building or location, with a brief explanation of why it fits the criteria. Be friendly and helpful.
-"""
-    
+The recommendation should be a specific building or location, with a brief explanation of why it fits the criteria. Be friendly and helpful."""
+    )
+])
+
+# Initialize chain
+chain = LLMChain(llm=llm, prompt=prompt_template)
+
+@app.route("/ask", methods=["POST"])
+def ask_assistant():
+    data = request.json or {}
+
+    # Build context for the prompt
+    context = {
+        "name": data.get("name", "Not specified"),
+        "year": data.get("year", "Not specified"),
+        "major": data.get("major", "Not specified"),
+        "classes": data.get("classes", "Not specified"),
+        "groupSize": data.get("groupSize", "Not specified"),
+        "comfortLevel": data.get("comfortLevel", "Not specified"),
+        "spacePrefs": ", ".join(data.get("spacePrefs", [])) or "None",
+        "travelDistance": data.get("travelDistance", "Not specified"),
+        "times": data.get("times", "Not specified"),
+        "personality": data.get("personality", "Not specified"),
+        "goal": data.get("goal", "Not specified"),
+        "bio": data.get("bio", "Not specified"),
+        "latitude": data.get("latitude", "Not specified"),
+        "longitude": data.get("longitude", "Not specified"),
+        "currentTime": data.get("currentTime", "Not specified")
+    }
+
     try:
-        # Pass the detailed prompt to the Langroid agent and get a response
-        response = task.run(prompt)
+        response = chain.run(context)
         return jsonify({"response": response})
     except Exception as e:
-        # Handle potential errors during agent processing
         return jsonify({"error": str(e)}), 500
 
-@app.route('/')
+@app.route("/")
 def home():
-    """
-    Renders the HTML page to interact with the assistant.
-    """
-    return render_template('index.html')
+    return render_template("index.html")
 
-# This block ensures the Flask app runs only when the script is executed directly
-if __name__ == '__main__':
-    # Use a port from environment variable, or default to 5000
-    port = int(os.environ.get('PORT', 5000))
-    app.run(debug=True, host='0.0.0.0', port=port)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host="0.0.0.0", port=port)
