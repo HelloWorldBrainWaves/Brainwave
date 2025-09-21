@@ -1,0 +1,251 @@
+nav {
+    margin-left: 2%;
+    margin-bottom: 200px;
+    text-align: left;
+}
+
+body { 
+    font-family: Arial, sans-serif; 
+    width: 100%; 
+    height: 100%;
+    margin: auto; 
+    padding: 10px; 
+    background-color: black;
+    color: rgb(236, 191, 87);
+}
+
+h2{
+    color: white;
+}
+
+label { 
+    display: block; 
+    margin-top: 10px; 
+}
+
+input, select, textarea { 
+    width: 100%; 
+    padding: 5px; 
+    margin-top: 5px; 
+}
+
+button { 
+    margin-top: 20px; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+}
+
+.gradientSection{
+    text-align: center;
+    font-size: 30px;
+}
+
+
+/* START PAGE: */
+.wave {
+  max-width: 100%; /* longer wave */
+  margin: 55px auto;
+}
+
+.wrap-text{
+    width: 40%; 
+    overflow-wrap: normal;
+}
+
+.brainWaveTrademark{
+    width: 100%;
+    align-items: center;
+    margin: auto;
+    padding-left: 30%;
+}
+
+.userSignIn {
+    width: 100%;
+    align-items: center;
+}
+
+.userSignIn p {
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: -5px;
+}
+
+
+button {
+    background: #d4af37;
+    color: black;
+    font-size: 1.2rem;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.signupBtn {
+    font-weight: bold;
+    background: black;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+}
+
+.loginBtn {
+    font-weight: bold;
+    background: black;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: #b8860b;
+}
+
+.bgWaves{
+    position: absolute;
+    top: 135px;
+    left: 0;
+    width: 100%;
+    z-index: 0;   /* behind content */
+    opacity: 1; /* subtle */
+}
+
+.brainWaveTrademark{
+    position: relative;
+    z-index: 1;   /* above waves */
+}
+
+/* QUESTIONNAIRE PAGE: */
+.questionnaireContainer {
+    font-family: system-ui, Arial; 
+    max-width: 980px; 
+    margin: 20px auto; 
+    padding: 16px;
+}
+
+form { 
+    background:#403c3b; 
+    padding: 20px; 
+    border-radius: 8px; 
+}
+
+input {
+    width: 98%;
+}
+
+label { 
+    display: block; 
+    margin-top: 25px; 
+    font-weight: 600; 
+}
+
+.checkBox {
+    width: 100%;
+    font-weight: 200;
+    display: flexbox;
+    max-width: 100px;
+    text-align: left;
+    align-items: center;
+}
+
+.checkBox label {
+    margin-left: -100px;
+}
+
+.row { 
+    display: flex; 
+    gap: 10px; 
+    flex-wrap: wrap; 
+}
+
+.card { 
+    border: 1px solid rgb(253, 221, 146); 
+    border-radius: 8px; 
+    padding: 12px; 
+    margin: 10px 0;
+ }
+
+.formBtn { 
+    padding:8px 12px; 
+    border-radius:6px; 
+    cursor:pointer; 
+    border:0; 
+}
+
+.formBtnPrimary { 
+    background:#246; 
+    color:#fff; 
+}
+
+.formBtnDanger { 
+    background:#c33; 
+    color:#fff; 
+}
+
+.muted { 
+    color:#666;
+    font-size: 0.9rem; 
+}
+
+.flex { 
+    display: flex; 
+    gap: 10px; 
+    align-items: center; 
+}
+
+.chip { 
+    background:#eef; 
+    padding: 4px 8px; 
+    border-radius: 999px; 
+    font-size: 0.85rem; 
+    margin-right: 6px; 
+}
+
+#matchesList .matchCard { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    gap: 12px; 
+}
+
+.matchesSectionHeadings h2 {
+    max-width: 600px;
+}
+
+.matchesSectionHeadings h3 {
+    max-width: 400px;
+}
+
+.matchesSectionHeadings{
+    display: flex; /* Makes the div a flex container */
+    align-items: center; /* Vertically aligns the headings */
+    gap: 76%; /* Adds space between the headings */
+}
+
+
+/* MAP PAGE */
+#map { 
+    height: 70vh; 
+    width: 100%; 
+    border-radius:8px; 
+    margin-top:12px; 
+}
+
+#info { 
+    color:#FFD700; 
+    background:#111; 
+    padding:12px; 
+    border-radius:8px; 
+    margin-top:8px; 
+}
+
+/* RESULTS PAGE */
+.embeddedMap{
+    width: 98%;
+    height: 500px;
+    margin: auto;
+}
+
+.mapContainer{
+    margin-top: 60px;
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BrainWave</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="questionnaireContainer">
+    <section class="card" id="profileSection">
+    <form id="profileForm">
+        <h2>Create / Update Profile</h2>
+
+        <label>Purdue Email</label>
+        <input id="email" type="email" required placeholder="name@purdue.edu" />
+
+        <label>Phone number</label>
+        <input id="phone" type="tel" placeholder="(optional)" />
+
+        <label>Name</label>
+        <input id="name" type="text" required />
+
+        <label>Year</label>
+        <select id="year">
+        <option>Freshman</option>
+        <option>Sophomore</option>
+        <option>Junior</option>
+        <option>Senior</option>
+        <option>Grad</option>
+        <option>Other</option>
+        </select>
+
+        <label>Major</label>
+        <input id="major" type="text" />
+
+        <label>Subjects / classes you are taking (check all that apply)</label>
+        <div id="subjectsContainer" class="row"></div>
+        <input id="subjectOther" placeholder="Other subject (comma separated)" />
+
+        <label>Desired Study Group Size</label>
+        <select id="groupSize">
+        <option value="1">1 (solo)</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4+</option>
+        </select>
+
+        <label>Comfort Level</label>
+        <select id="comfort">
+        <option>Quiet</option>
+        <option>Background music</option>
+        <option>Talkative / collaborative</option>
+        <option>Mixed</option>
+        </select>
+
+        <label>Study Space Preferences (checkboxes)</label>
+        <div class="row" id="spacesContainer"></div>
+
+        <label>Distance you're willing to travel (miles)</label>
+        <input id="distance" type="number" min="0" placeholder="e.g., 5" />
+
+        <label>Times / dates you like to study</label>
+        <div>
+        <input id="timeInput" placeholder="e.g., Mon 6-8pm, Tue 2-4pm" />
+        <button id="addTime" type="button" class="formBtn">Add</button>
+        </div>
+        <div id="timesList" class="muted"></div>
+
+        <label>Personality / Traits</label>
+        <div id="traitsContainer" class="row"></div>
+
+        <label>Goal</label>
+        <input id="goal" placeholder="e.g., ace the midterm" />
+
+        <label>Ice-Breaker</label>
+        <input id="ice" placeholder="e.g., favorite snack" />
+
+        <label>Bio (short)</label>
+        <textarea id="bio" rows="3" placeholder="Tell others about you"></textarea>
+
+        <div style="margin-top:12px;">
+            <button class="formBtn formBtnPrimary" id="saveBtn" onclick="testFunction()" type="submit">Save Profile</button>
+            <button class="formBtn" id="viewMatchesBtn" type="button">View Matches</button>
+            <button class="formBtn" id="viewRequestsBtn" type="button">Match Requests</button>
+        </div>
+    </form>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="matchesSection" style="display:none"> 
+        <!-- Study Buddy Matches-->
+        <div class="matchesSectionHeadings">
+            <h2>Study Buddy Matches</h2>
+            <h3>Add Match</h3>
+        </div>
+        <div id="matchesList"></div>
+
+        <!-- Study Room Location Matches -->
+        <div class="mapContainer">
+            <h2>Places that Match your Rhythm</h2>
+            <iframe class="embeddedMap" src="map.html" ></iframe>
+        </div> 
+
+        <div>
+            <button class="formBtn" id="backToProfile">Back</button>
+        </div>
+    </section>
+
+    <section id="requestsSection" style="display:none">
+        <h2>Incoming Match Requests</h2>
+        <div id="requestsList"></div>
+        <div>
+            <button class="formBtn" id="backToProfile2">Back</button>
+        </div>
+    </section>
+
+    <script src="formFunctions.js"></script> 
+</body>
+
+</html>

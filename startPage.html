@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainWave</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <nav>
+        BRAINWAVE  
+        <br>
+    </nav>
+</head>
+
+<body>
+
+    
+    <div class="gradientSection">
+        <!-- Wavy Line with Fade -->
+        <div class="bgWaves">
+            <svg class="wave" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                <!-- Gradient for fading effect -->
+                <linearGradient id="fadeStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="13%" stop-color="#d4af37" stop-opacity="0.15"/>
+                    <stop offset="22%" stop-color="#d4af37" stop-opacity="1"/>
+                    <stop offset="32%" stop-color="#d4af37" stop-opacity="0"/>
+                    <stop offset="63%" stop-color="#d4af37" stop-opacity="0"/>
+                    <stop offset="75%" stop-color="#d4af37" stop-opacity="0.89"/>
+                    <stop offset="80%" stop-color="#d4af37" stop-opacity="1"/>
+                    <stop offset="95%" stop-color="#d4af37" stop-opacity="0.15"/>
+
+                </linearGradient>
+                </defs>
+
+                <!-- 3 stacked wave paths -->
+                <g transform="rotate(-9, 600, 100)">
+                <path d="M0,60 Q300,0 700,60 T1200,60"
+                    stroke="url(#fadeStroke)" stroke-width="2" fill="none"/>
+                <g transform="rotate(6, 600, 100)">
+                <path d="M0,100 Q300,40 600,100 T1200,100"
+                    stroke="url(#fadeStroke)" stroke-width="2" fill="none"/>
+            </svg>
+        </div>
+        
+        <section class="brainWaveTrademark gradientSection">
+            <!-- BrainWave Trademarks (logo & slogan(?)) -->
+            <!-- ### IMAGE PLACEHOLDER -->
+            <h2 class="wrap-text">Study at Your Own Flow</h2>
+
+        </section>
+
+        <br>
+
+        <section class="userSignIn">
+            <!-- Log-in & Sign-up buttons --> 
+            <div class="stackedBtn">
+                <a href="questionnaire.html">
+                    <button class="signupBtn">
+                        Get Started
+                        <!-- ### Link the button to the index.html file -->
+                    </button>
+                </a> 
+            </div>
+        </section>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Map — Purdue Study Planner</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+</head>
+
+<body>
+    <div class="container card">
+        <div id="info">Loading map...</div>
+        <div id="map"></div>
+        <a class="btn" href="{{ url_for('matches') }}">Back to Matches</a>
+    </div>
+
+    <script>
+        const CURRENT_USER = {{ current|tojson if current is defined else 'null' }}; 
+        const SELECTED_USER = {{ selected|tojson if selected is defined else 'null' }}; 
+        const RECOMMENDED = {{ recommended|tojson if recommended is defined else 'null' }}; 
+        const SPOTS = {{ spots|tojson }}; 
+        const GMAP_KEY = "{{ google_api_key }}";
+    </script>
+    
+    <script src="mapFunctions.js"></script> 
+    <script src="formFunctions.js"></script> 
+
+</body>
+
+</html>
